@@ -6,5 +6,5 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/health', (req, res) => {
-  res.sendStatus(200);
+    res.sendStatus(200);
 });
