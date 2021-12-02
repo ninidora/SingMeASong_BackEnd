@@ -13,11 +13,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "husky": {
-    "hooks": {
-      "pre-commit": "echo '[Husky] pre-commit'"
-    }
-  },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
