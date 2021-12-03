@@ -1,7 +1,9 @@
+import ConflictError from '../errors/ConflictError.js';
+import ValidationError from '../errors/ValidationError.js';
 import * as recommendationsRepository from '../repositories/recommendationsRepository.js';
 import * as recommendationsService from '../services/recommendationsService.js';
 
-const postRecommendation = async (req, res) => {
+const postRecommendation = async (req, res, next) => {
     const {
         name,
         youtubeLink,
@@ -11,12 +13,15 @@ const postRecommendation = async (req, res) => {
 
     try {
         recommendationsService.validateMusicObject(name, youtubeLink);
+        await recommendationsService.verifyUniqueness(youtubeLink);
         const requisitionObject = recommendationsService.createRequisitionObject(name, youtubeLink);
-        await recommendationsRepository.InsertRecommendation(requisitionObject);
+        await recommendationsRepository.insertRecommendation(requisitionObject);
         return res.sendStatus(201);
     } catch (error) {
-        if (error.name === 'ValidationError') return res.status(404).send(error.message);
-        return res.status(500);
+        if (error instanceof ValidationError || error instanceof ConflictError) {
+            return res.status(error.statusCode).send(error.message);
+        }
+        return next(error);
     }
 };
 
