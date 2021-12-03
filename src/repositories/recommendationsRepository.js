@@ -1,6 +1,6 @@
 import connection from '../database.js';
 
-const InsertRecommendation = async (name, artist, link) => {
+const InsertRecommendation = async ({ name, artist, link }) => {
     const result = await connection.query(`INSERT INTO musics (name, artist, link, score)
         VALUES ($1, $2, $3, $4)`, [name, artist, link, 0]);
 
