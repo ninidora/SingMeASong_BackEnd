@@ -14,6 +14,10 @@ const updateRecommendationsScore = async (id, newScore) => {
     await connection.query('UPDATE musics SET score = $1 WHERE id = $2', [newScore, id]);
 };
 
+const deleteRecommendation = async (id) => {
+    await connection.query('DELETE FROM musics WHERE id = $1', [id]);
+};
+
 const selectAllSimilarLinks = async (youtubeLink) => {
     const result = await connection.query('SELECT * FROM musics WHERE link = $1', [youtubeLink]);
     return result;
@@ -24,4 +28,5 @@ export {
     selectVotedRecommendation,
     selectAllSimilarLinks,
     updateRecommendationsScore,
+    deleteRecommendation,
 };

@@ -2,6 +2,7 @@ import ValidationError from '../errors/ValidationError.js';
 import musicValidation from '../validations/joiValidations.js';
 import * as recommendationRepository from '../repositories/recommendationsRepository.js';
 import ConflictError from '../errors/ConflictError.js';
+import NotFound from '../errors/NotFound.js';
 
 const validateMusicObject = (name, youtubeLink) => {
     const validatedMusic = musicValidation.validate({ name, youtubeLink });
@@ -32,8 +33,23 @@ const createRequisitionObject = (name, youtubeLink) => {
     };
 };
 
+const verifyVotedMusicExistence = async (id) => {
+    const response = await recommendationRepository.selectVotedRecommendation(id);
+    if (!response.rowCount) {
+        throw new NotFound('It looks like this music is not on our database');
+    }
+    return response;
+};
+
+const increaseMusicScore = async (id, response) => {
+    const initialScore = response.rows[0].score;
+    await recommendationRepository.updateRecommendationsScore(id, initialScore + 1);
+};
+
 export {
     validateMusicObject,
     verifyUniqueness,
     createRequisitionObject,
+    verifyVotedMusicExistence,
+    increaseMusicScore,
 };
