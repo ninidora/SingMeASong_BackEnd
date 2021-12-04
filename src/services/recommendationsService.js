@@ -41,14 +41,17 @@ const verifyVotedMusicExistence = async (id) => {
     return response;
 };
 
-const handleDownVote = async (id, response) => {
-    const initialScore = response.rows[0].score;
-
+const handleVote = async (id, initialScore, type) => {
+    if (type === 'up') {
+        await recommendationRepository.updateRecommendationsScore(id, initialScore + 1);
+        return 'upvoted successfully';
+    }
     if (Number(initialScore) === -5) {
         await recommendationRepository.deleteRecommendation(id);
-        return;
+        return 'deleted successfully';
     }
     await recommendationRepository.updateRecommendationsScore(id, initialScore - 1);
+    return 'downvoted successfully';
 };
 
 export {
@@ -56,5 +59,5 @@ export {
     verifyUniqueness,
     createRequisitionObject,
     verifyVotedMusicExistence,
-    handleDownVote,
+    handleVote,
 };
