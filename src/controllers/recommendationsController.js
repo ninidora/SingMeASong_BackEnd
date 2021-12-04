@@ -25,4 +25,25 @@ const postRecommendation = async (req, res, next) => {
     }
 };
 
-export default postRecommendation;
+const postUpVote = async (req, res, next) => {
+    const {
+        id,
+    } = req.params;
+
+    try {
+        const response = await recommendationsRepository.selectVotedRecommendation(id);
+        if (!response.rowCount) {
+            return res.sendStatus(404);
+        }
+        const initialScore = response.rows[0].score;
+        await recommendationsRepository.updateRecommendationsScore(id, initialScore + 1);
+        return res.status(201).send(id);
+    } catch (error) {
+        return next(error);
+    }
+};
+
+export {
+    postRecommendation,
+    postUpVote,
+};
