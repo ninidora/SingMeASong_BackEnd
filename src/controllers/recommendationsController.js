@@ -66,7 +66,6 @@ const getRandomMusics = async (req, res, next) => {
         const recommendation = await recommendationsService.handleRandomMusic(random);
         return res.send(recommendation);
     } catch (error) {
-        console.log(error);
         if (error instanceof NotFound) return res.status(error.statusCode).send(error.message);
         return next(error);
     }
