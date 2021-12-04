@@ -6,16 +6,9 @@ import NotFound from '../errors/NotFound.js';
 
 const validateMusicObject = (name, youtubeLink) => {
     const validatedMusic = musicValidation.validate({ name, youtubeLink });
-
-    if (validatedMusic.error) {
-        throw new ValidationError(validatedMusic.error.details[0].message);
-    }
-    if (!youtubeLink.includes('youtube.com/watch?')) {
-        throw new ValidationError('Your youtube link must contain youtube.com/watch?');
-    }
-    if (!name.includes(' - ')) {
-        throw new ValidationError("Your music must follow the pattern 'Artist - Name'");
-    }
+    if (validatedMusic.error) throw new ValidationError(validatedMusic.error.details[0].message);
+    if (!youtubeLink.includes('youtube.com/watch?')) throw new ValidationError('Your youtube link must contain youtube.com/watch?');
+    if (!name.includes(' - ')) throw new ValidationError("Your music must follow the pattern 'Artist - Name'");
 };
 
 const verifyUniqueness = async (youtubeLink) => {
@@ -25,7 +18,6 @@ const verifyUniqueness = async (youtubeLink) => {
 
 const createRequisitionObject = (name, youtubeLink) => {
     const musicArray = name.split(' - ');
-
     return {
         name: musicArray[1],
         artist: musicArray[0],
@@ -35,9 +27,7 @@ const createRequisitionObject = (name, youtubeLink) => {
 
 const verifyVotedMusicExistence = async (id) => {
     const response = await recommendationRepository.selectVotedRecommendation(id);
-    if (!response.rowCount) {
-        throw new NotFound('It looks like this music is not on our database');
-    }
+    if (!response.rowCount) throw new NotFound('It looks like this music is not on our database');
     return response;
 };
 
@@ -54,10 +44,21 @@ const handleVote = async (id, initialScore, type) => {
     return 'downvoted successfully';
 };
 
+const handleMusicName = (result) => {
+    const recommendations = result.rows.map((music) => ({
+        id: music.id,
+        name: `${music.name} - ${music.artist}`,
+        youtubeLink: music.link,
+        score: music.score,
+    }));
+    return recommendations;
+};
+
 export {
+    createRequisitionObject,
+    handleMusicName,
+    handleVote,
     validateMusicObject,
     verifyUniqueness,
-    createRequisitionObject,
     verifyVotedMusicExistence,
-    handleVote,
 };

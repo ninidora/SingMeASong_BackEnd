@@ -23,10 +23,16 @@ const selectAllSimilarLinks = async (youtubeLink) => {
     return result;
 };
 
+const selectTopAmount = async (amount) => {
+    const result = await connection.query('SELECT * FROM musics ORDER BY score DESC LIMIT $1', [Number(amount)]);
+    return result;
+};
+
 export {
+    deleteRecommendation,
     insertRecommendation,
     selectVotedRecommendation,
     selectAllSimilarLinks,
+    selectTopAmount,
     updateRecommendationsScore,
-    deleteRecommendation,
 };
