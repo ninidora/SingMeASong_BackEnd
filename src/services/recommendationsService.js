@@ -44,10 +44,10 @@ const handleVote = async (id, initialScore, type) => {
     return 'downvoted successfully';
 };
 
-const handleMusicName = (result) => {
+const handleMusicObject = (result) => {
     const recommendations = result.rows.map((music) => ({
         id: music.id,
-        name: `${music.name} - ${music.artist}`,
+        name: `${music.artist} - ${music.name}`,
         youtubeLink: music.link,
         score: music.score,
     }));
@@ -56,7 +56,7 @@ const handleMusicName = (result) => {
 
 export {
     createRequisitionObject,
-    handleMusicName,
+    handleMusicObject,
     handleVote,
     validateMusicObject,
     verifyUniqueness,

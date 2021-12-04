@@ -49,7 +49,7 @@ const getTopAmount = async (req, res, next) => {
     const { amount } = req.params;
     try {
         const result = await recommendationsRepository.selectTopAmount(amount);
-        const recommendations = recommendationsService.handleMusicName(result);
+        const recommendations = recommendationsService.handleMusicObject(result);
         res.send(recommendations);
     } catch (error) {
         next(error);
