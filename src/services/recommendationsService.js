@@ -45,6 +45,7 @@ const handleVote = async (id, initialScore, type) => {
 };
 
 const handleMusicObject = (result) => {
+    if (!result.rows.length) throw new NotFound('looks like there are no musics on our database');
     const recommendations = result.rows.map((music) => ({
         id: music.id,
         name: `${music.artist} - ${music.name}`,
@@ -54,9 +55,34 @@ const handleMusicObject = (result) => {
     return recommendations;
 };
 
+const handleRandomMusic = async (random) => {
+    let recommendations;
+    if (random > 0.3) {
+        const result = await recommendationRepository.selectRandomMusic('> 10');
+        if (result.rowCount) {
+            recommendations = result.rows.sort(() => Math.random() - 0.5);
+            return recommendations[0];
+        }
+    } else {
+        const result = await recommendationRepository.selectRandomMusic('< 10');
+        if (result.rowCount) {
+            recommendations = result.rows.sort(() => Math.random() - 0.5);
+            return recommendations[0];
+        }
+    }
+
+    const result = await recommendationRepository.selectRandomMusic('> -5');
+    if (!result.rowCount) {
+        throw new NotFound('It looks like there are no movies on our database');
+    }
+    recommendations = result.rows.sort(() => Math.random() - 0.5);
+    return recommendations[0];
+};
+
 export {
     createRequisitionObject,
     handleMusicObject,
+    handleRandomMusic,
     handleVote,
     validateMusicObject,
     verifyUniqueness,

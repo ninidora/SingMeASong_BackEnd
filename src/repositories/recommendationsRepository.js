@@ -28,11 +28,18 @@ const selectTopAmount = async (amount) => {
     return result;
 };
 
+const selectRandomMusic = async (condition) => {
+    const reqQuery = `SELECT * FROM musics WHERE score ${condition}`;
+    const result = await connection.query(reqQuery);
+    return result;
+};
+
 export {
     deleteRecommendation,
     insertRecommendation,
     selectVotedRecommendation,
     selectAllSimilarLinks,
+    selectRandomMusic,
     selectTopAmount,
     updateRecommendationsScore,
 };

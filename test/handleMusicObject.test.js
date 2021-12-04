@@ -1,3 +1,4 @@
+import NotFound from '../src/errors/NotFound.js';
 import * as recommendationsService from '../src/services/recommendationsService.js';
 
 describe('handleMusicObject', () => {
@@ -17,5 +18,13 @@ describe('handleMusicObject', () => {
             youtubeLink: 'https://youtube.com/watch?',
             score: 200,
         });
+    });
+
+
+    it('Should throw NotFound when no results', () => {
+        const fn = () => recommendationsService.handleMusicObject({
+            rows: []
+        });
+        expect(fn).toThrowError(NotFound)
     });
 });

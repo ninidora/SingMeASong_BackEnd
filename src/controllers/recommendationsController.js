@@ -9,8 +9,8 @@ const postRecommendation = async (req, res, next) => {
         name,
         youtubeLink,
     } = req.body;
-    if (!name || !youtubeLink) throw new Error('Please fill the name and youtubeLink fields');
     try {
+        if (!name || !youtubeLink) throw new ValidationError('Please fill the name and youtubeLink fields');
         recommendationsService.validateMusicObject(name, youtubeLink);
         await recommendationsService.verifyUniqueness(youtubeLink);
         const requisitionObject = recommendationsService.createRequisitionObject(name, youtubeLink);
@@ -48,17 +48,34 @@ const postDownVote = async (req, res, next) => {
 const getTopAmount = async (req, res, next) => {
     const { amount } = req.params;
     try {
+        if (!Number(amount)) throw new ValidationError('Please send a number amount');
         const result = await recommendationsRepository.selectTopAmount(amount);
         const recommendations = recommendationsService.handleMusicObject(result);
-        res.send(recommendations);
+        return res.send(recommendations);
     } catch (error) {
-        next(error);
+        if (error instanceof NotFound || error instanceof ValidationError) {
+            return res.status(error.statusCode).send(error.message);
+        }
+        return next(error);
+    }
+};
+
+const getRandomMusics = async (req, res, next) => {
+    try {
+        const random = Math.random();
+        const recommendation = await recommendationsService.handleRandomMusic(random);
+        return res.send(recommendation);
+    } catch (error) {
+        console.log(error);
+        if (error instanceof NotFound) return res.status(error.statusCode).send(error.message);
+        return next(error);
     }
 };
 
 export {
+    getTopAmount,
+    getRandomMusics,
     postDownVote,
     postRecommendation,
-    getTopAmount,
     postUpVote,
 };
