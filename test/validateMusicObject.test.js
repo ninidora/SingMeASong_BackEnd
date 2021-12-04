@@ -21,5 +21,4 @@ describe('validateMusicObject', () => {
         const fn = () => recommendationsService.validateMusicObject('chitaozao - chora rapaz', 'https://youtube.com/watch?');
         expect(fn).not.toThrowError(ValidationError);
     });
-
 })
