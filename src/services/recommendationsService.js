@@ -44,7 +44,7 @@ const verifyVotedMusicExistence = async (id) => {
 const handleDownVote = async (id, response) => {
     const initialScore = response.rows[0].score;
 
-    if (Number(initialScore) === -4) {
+    if (Number(initialScore) === -5) {
         await recommendationRepository.deleteRecommendation(id);
         return;
     }
