@@ -32,7 +32,23 @@ const postUpVote = async (req, res, next) => {
     } = req.params;
     try {
         const response = await recommendationsService.verifyVotedMusicExistence(id);
-        await recommendationsService.increaseMusicScore(id, response);
+        await recommendationsRepository.updateRecommendationsScore(id, response.rows[0].score + 1);
+        return res.sendStatus(201);
+    } catch (error) {
+        if (error instanceof NotFound) {
+            return res.status(error.statusCode).send(error.message);
+        }
+        return next(error);
+    }
+};
+
+const postDownVote = async (req, res, next) => {
+    const {
+        id,
+    } = req.params;
+    try {
+        const response = await recommendationsService.verifyVotedMusicExistence(id);
+        await recommendationsService.handleDownVote(id, response);
         return res.sendStatus(201);
     } catch (error) {
         if (error instanceof NotFound) {
@@ -45,4 +61,5 @@ const postUpVote = async (req, res, next) => {
 export {
     postRecommendation,
     postUpVote,
+    postDownVote,
 };
