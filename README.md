@@ -1,102 +1,15 @@
-# Sing me a Song API
+# Sing me a Song
 <p align="center" >
  <img src = "https://user-images.githubusercontent.com/87671165/144729793-8aadf069-cdfa-4d51-89b5-17ebb9588b27.gif" height = "350px"/>
 </p>
 
 ## About
 
-Are you very undecided? Well, I am, but we are lucky internet has become a life savior. In this API you can post some musics, upvote the ones you like the most and downvote the ones you don't enjoy. Based on those actions, Sing me a Song API has an algorithm which returns randomly the musics you've posted. You can also get your top voted musics only by setting the amount you want. Isn't that awesome? Your "I don't know which music I wanna choose" moments are over!!
+Think about an ordinary movie theater, ok, now forget it! Cineflex is not an app for an ordinary movie theater, this platform is about a theater which only broadcasts the IMDB 50 top rated movies. If you are a cinefile that loves to watch movies your family thinks like: "what? this is from the 60's", this is the theater for you to go. Use the production version on this link: https://sing-me-a-song-backend.herokuapp.com
+
 
 ## Features
 
-The API has the following endpoints:
-
-<details>
-    <summary><strong>POST</strong>  /recommendations</summary>
-    
-* Adds a new music recommendation. The requisition has to follow the pattern bellow:
-    
-    ```json
-    {
-    	"name": "PingFong - Baby Shark",
-    	"youtubeLink": "https://www.youtube.com/watch?v=XqZsoesa55w",
-    }
-    ```
-    
-    - Validation
-        - `name` is a mandatory string
-        - `youtubeLink` must be a youtube domain link
-    - Return
-        - Returns the JSON of the music you've registered:
-            ```json
-            {
-              "id": 5,
-              "name": "PingFong - Baby Shark",
-              "score": 0,
-              "youtubeLink": "https://www.youtube.com/watch?v=XqZsoesa55w"
-            }
-            ```
-</details> 
-
-<details>
-    <summary><strong>POST</strong>  /recommendations/:id/upvote</summary>
-    
-- Adds a point to the score of the recommendation you've chosen.
-- Returns the recommendation with the new score
-</details> 
-
-<details>
-    <summary><strong>POST</strong> /recommendations/:id/downvote</summary>
-    
-- Remove a point of the recommendation you've chosen.
-- If the scores get bellow -5, the recommendation'll be deleted.
-- Returns the recommendation with the new score
-</details>
-
-<details>
-    <summary><strong>GET</strong> /recommendations/random</summary>
-    
-> Receives a random recommendation based on the algorithm bellow:
-- **70% of the times**: a music which score is above 10 will be recommended randomly;
-- **30% of the times**: a música which score is between -5 e 10 (included) will be recommended randomly;
-- In case there are only above 10 scores or only bellow or equal to 10 scores, any music will be recommended;
--In case there are no musics on the database, a statusCode 404 will be returned;
-
-- The answer will follow the pattern bellow:
-
-         ```json
-            {
-              "id": 5,
-              "name": "PingFong - Baby Shark",
-              "score": 230,
-              "youtubeLink": "https://www.youtube.com/watch?v=XqZsoesa55w"
-            }
-            ```
-</details>
-
-
-<details>
-    <summary><strong>GET</strong> /recommendations/top/:amount</summary>
-    
-> Returns the musics with the highest scores. Returns the top x(`:amount` parameter of the endpoint) musics, sorted by score
-(highest first)
-    
-            [
-                {
-                  "id": 5,
-                  "name": "PingFong - Baby Shark",
-                  "score": 230,
-                  "youtubeLink": "https://www.youtube.com/watch?v=XqZsoesa55w"
-                },
-                {
-                    "id": 12,
-                    "name": "George Michael - Careless Whispers",
-                    "youtubeLink": "https://www.youtube.com/watch?v=izGwDsrQ1eQ",
-                    "score": 112
-                },
-                ...
-            ]
-</details>
 
 
 ## How to run?
