@@ -24,7 +24,7 @@ The API has the following endpoints:
     ```
     
     - Validation
-        - `name` is a mandatory string
+        - `name` must follow the pattern "Artist - Name"
         - `youtubeLink` must be a youtube domain link
     - Return
         - Returns the JSON of the music you've registered:
