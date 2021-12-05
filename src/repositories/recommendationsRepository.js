@@ -1,8 +1,14 @@
 import connection from '../database.js';
 
 const insertRecommendation = async ({ name, artist, link }) => {
-    await connection.query(`INSERT INTO musics (name, artist, link, score)
+    const result = await connection.query(`INSERT INTO musics (name, artist, link, score)
         VALUES ($1, $2, $3, $4)`, [name, artist, link, 0]);
+    return result;
+};
+
+const selectLastId = async () => {
+    const result = await connection.query('SELECT id FROM musics ORDER BY id DESC LIMIT 1');
+    return result.rows[0].id;
 };
 
 const selectVotedRecommendation = async (id) => {
@@ -39,6 +45,7 @@ export {
     insertRecommendation,
     selectVotedRecommendation,
     selectAllSimilarLinks,
+    selectLastId,
     selectRandomMusic,
     selectTopAmount,
     updateRecommendationsScore,

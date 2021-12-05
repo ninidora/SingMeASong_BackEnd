@@ -13,9 +13,10 @@ const postRecommendation = async (req, res, next) => {
         if (!name || !youtubeLink) throw new ValidationError('Please fill the name and youtubeLink fields');
         recommendationsService.validateMusicObject(name, youtubeLink);
         await recommendationsService.verifyUniqueness(youtubeLink);
+        const lastId = await recommendationsRepository.selectLastId();
         const requisitionObject = recommendationsService.createRequisitionObject(name, youtubeLink);
         await recommendationsRepository.insertRecommendation(requisitionObject);
-        return res.sendStatus(201);
+        return res.status(201).send({ id: lastId + 1, ...requisitionObject, score: 0 });
     } catch (error) {
         if (error instanceof ValidationError || error instanceof ConflictError) {
             return res.status(error.statusCode).send(error.message);
@@ -28,9 +29,17 @@ const postVote = async (req, res, next, type) => {
     const { id } = req.params;
     try {
         const response = await recommendationsService.verifyVotedMusicExistence(id);
-        const initialScore = response.rows[0].score;
-        await recommendationsService.handleVote(id, initialScore, type);
-        return res.sendStatus(201);
+        const recommendation = response.rows[0];
+        await recommendationsService.handleVote(id, recommendation.score, type);
+        if (recommendation.score - 1) {
+            return res.send('Recommendation deleted because its score got lower than -5');
+        }
+        return res.send({
+            id: recommendation.id,
+            name: `${recommendation.artist} - ${recommendation.name}`,
+            youtubeLink: recommendation.link,
+            score: type === 'up' ? recommendation.score + 1 : recommendation.score - 1,
+        });
     } catch (error) {
         if (error instanceof NotFound) return res.status(error.statusCode).send(error.message);
         return next(error);
