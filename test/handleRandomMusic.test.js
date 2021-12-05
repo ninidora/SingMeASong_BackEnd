@@ -24,17 +24,18 @@ describe('handleRandomMusic', () => {
                 return {rowCount: 0, rows: []};
             }
             if(condition === '>= -5') {
-                return {rowCount: 1, rows: ['0']};
+                return {rowCount: 1, rows: ['0', '2']};
             }
         })
+        random.mockImplementationOnce(() => 0.4)
         const result = await recommendationsService.handleRandomMusic(0.29);
-        expect(result).toEqual('0');
+        expect(result).toEqual('2');
     });
 
-    it('Should return the rows value for 0.3', async () => {
+    it('Should return the first value for 0.3', async () => {
         selectMusic.mockImplementationOnce(async (condition) => {
             if(condition === '> 10') {
-                return {rowCount: 1, rows: ['0']};
+                return {rowCount: 1, rows: ['0', '1']};
             }
         })
         const result = await recommendationsService.handleRandomMusic(0.3);
@@ -44,7 +45,7 @@ describe('handleRandomMusic', () => {
     it('Should return the rows value for 0.31', async () => {
         selectMusic.mockImplementation(async (condition) => {
             if(condition === '> 10') {
-                return {rowCount: 1, rows: ['0']};
+                return {rowCount: 1, rows: ['0', '1']};
             }
         })
         const result = await recommendationsService.handleRandomMusic(0.31);
@@ -58,20 +59,21 @@ describe('handleRandomMusic', () => {
                 return {rowCount: 0, rows: []};
             }
             if(condition === '>= -5') {
-                return {rowCount: 1, rows: ['0']};
+                return {rowCount: 1, rows: ['0', '3']};
             }
         })
+        random.mockImplementationOnce(() => 0.5)
         const result = await recommendationsService.handleRandomMusic(0.31);
         expect(result).toEqual('0');
     });
 
-    it('Should return the other values for 0.31 and no > 10 values', async () => {
+    it('Should return the first other value for 0.31 and no > 10 values', async () => {
         selectMusic.mockImplementationOnce(async (condition) => {
             if (condition === '> 10') {
                 return {rowCount: 0, rows: []};
             }
             if (condition === '>= -5') {
-                return {rowCount: 1, rows: ['0']};
+                return {rowCount: 2, rows: ['0', '1']};
             }
         })
         const result = await recommendationsService.handleRandomMusic(0.3);
