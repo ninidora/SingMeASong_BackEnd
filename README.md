@@ -1,6 +1,6 @@
 # Sing me a Song
 <p align="center" >
- <img src = "![giphy](https://user-images.githubusercontent.com/87671165/144729793-8aadf069-cdfa-4d51-89b5-17ebb9588b27.gif)" height = "350px"/>
+ <img src = "https://user-images.githubusercontent.com/87671165/144729793-8aadf069-cdfa-4d51-89b5-17ebb9588b27.gif" height = "350px"/>
 </p>
 
 ## About
