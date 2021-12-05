@@ -10,6 +10,96 @@ Think about an ordinary movie theater, ok, now forget it! Cineflex is not an app
 
 ## Features
 
+## Features
+
+The API has the following endpoints:
+
+<details>
+    <summary><strong>POST</strong>  /recommendations</summary>
+    
+* Adds a new music recommendation. The requisition has to follow the pattern bellow:
+    
+    ```json
+    {
+    	"name": "PingFong - Baby Shark",
+    	"youtubeLink": "https://www.youtube.com/watch?v=XqZsoesa55w",
+    }
+    ```
+    
+    - Validation
+        - `name` is a mandatory string
+        - `youtubeLink` must be a youtube domain link
+    - Return
+        - Returns the JSON of the music you've registered:
+            ```json
+            {
+              "id": 5,
+              "name": "PingFong - Baby Shark",
+              "score": 0,
+              "youtubeLink": "https://www.youtube.com/watch?v=XqZsoesa55w"
+            }
+            ```
+</details> 
+
+<details>
+    <summary><strong>POST</strong>  /recommendations/:id/upvote</summary>
+    
+- Adds a point to the score of the recommendation you've chosen.
+- Returns the recommendation with the new score
+</details> 
+
+<details>
+    <summary><strong>POST</strong> /recommendations/:id/downvote</summary>
+    
+- Remove a point of the recommendation you've chosen.
+- If the scores get bellow -5, the recommendation'll be deleted.
+- Returns the recommendation with the new score
+</details>
+
+<details>
+    <summary><strong>GET</strong> /recommendations/random</summary>
+    
+> Receives a random recommendation based on the algorithm bellow:
+- **70% of the times**: a music which score is above 10 will be recommended randomly;
+- **30% of the times**: a música which score is between -5 e 10 (included) will be recommended randomly;
+- In case there are only above 10 scores or only bellow or equal to 10 scores, any music will be recommended;
+-In case there are no musics on the database, a statusCode 404 will be returned;
+
+- The answer will follow the pattern bellow:
+
+         ```json
+            {
+              "id": 5,
+              "name": "PingFong - Baby Shark",
+              "score": 230,
+              "youtubeLink": "https://www.youtube.com/watch?v=XqZsoesa55w"
+            }
+            ```
+</details>
+
+
+<details>
+    <summary><strong>GET</strong> /recommendations/top/:amount</summary>
+    
+> Returns the musics with the highest scores. Returns the top x(`:amount` parameter of the endpoint) musics, sorted by score
+(highest first)
+    
+            [
+                {
+                  "id": 5,
+                  "name": "PingFong - Baby Shark",
+                  "score": 230,
+                  "youtubeLink": "https://www.youtube.com/watch?v=XqZsoesa55w"
+                },
+                {
+                    "id": 12,
+                    "name": "George Michael - Careless Whispers",
+                    "youtubeLink": "https://www.youtube.com/watch?v=izGwDsrQ1eQ",
+                    "score": 112
+                },
+                ...
+            ]
+</details>
 
 
 ## How to run?
