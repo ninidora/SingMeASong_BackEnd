@@ -29,7 +29,7 @@ const selectTopAmount = async (amount) => {
 };
 
 const selectRandomMusic = async (condition) => {
-    const reqQuery = `SELECT * FROM musics WHERE score ${condition}`;
+    const reqQuery = `SELECT * FROM musics WHERE score ${condition} ORDER BY RANDOM() LIMIT 1`;
     const result = await connection.query(reqQuery);
     return result;
 };
