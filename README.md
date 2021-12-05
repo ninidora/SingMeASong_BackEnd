@@ -5,10 +5,7 @@
 
 ## About
 
-Think about an ordinary movie theater, ok, now forget it! Cineflex is not an app for an ordinary movie theater, this platform is about a theater which only broadcasts the IMDB 50 top rated movies. If you are a cinefile that loves to watch movies your family thinks like: "what? this is from the 60's", this is the theater for you to go. Use the production version on this link: https://sing-me-a-song-backend.herokuapp.com
-
-
-## Features
+Are you very undecided? Well, I am, but we are lucky internet has become a life savior. In this API you can post some musics, upvote the ones you like the most and downvote the ones you don't enjoy. Based on those actions, Sing me a Song API has an algorithm which returns randomly the musics you've posted. You can also get your top voted musics only by setting the amount you want. Isn't that awesome? Your "I don't know which music I wanna choose" moments are over!!
 
 ## Features
 
