@@ -31,8 +31,8 @@ const postVote = async (req, res, next, type) => {
         const response = await recommendationsService.verifyVotedMusicExistence(id);
         const recommendation = response.rows[0];
         await recommendationsService.handleVote(id, recommendation.score, type);
-        if (recommendation.score - 1) {
-            return res.send('Recommendation deleted because its score got lower than -5');
+        if ((recommendation.score - 1) < -5) {
+            return res.send('Recommendation has been deleted because its score got lower than -5');
         }
         return res.send({
             id: recommendation.id,
