@@ -57,21 +57,22 @@ const handleMusicObject = (result) => {
 
 const handleRandomMusic = async (random) => {
     let recommendations;
-    if (random > 0.3) {
-        const result = await recommendationRepository.selectRandomMusic('> 10');
+    let result;
+    if (random >= 0.3) {
+        result = await recommendationRepository.selectRandomMusic('> 10');
         if (result.rowCount) {
             recommendations = result.rows.sort(() => Math.random() - 0.5);
             return recommendations[0];
         }
     } else {
-        const result = await recommendationRepository.selectRandomMusic('< 10');
+        result = await recommendationRepository.selectRandomMusic('<= 10');
         if (result.rowCount) {
             recommendations = result.rows.sort(() => Math.random() - 0.5);
             return recommendations[0];
         }
     }
 
-    const result = await recommendationRepository.selectRandomMusic('> -5');
+    result = await recommendationRepository.selectRandomMusic('>= -5');
     if (!result.rowCount) {
         throw new NotFound('It looks like there are no movies on our database');
     }
