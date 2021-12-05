@@ -3,6 +3,6 @@
 /coverage
 
 # misc
-.env.prod
+.env
 .env.test
 .env.dev
