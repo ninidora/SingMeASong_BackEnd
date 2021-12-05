@@ -1,14 +1,11 @@
-# Sing me a Song
+# Sing me a Song API
 <p align="center" >
  <img src = "https://user-images.githubusercontent.com/87671165/144729793-8aadf069-cdfa-4d51-89b5-17ebb9588b27.gif" height = "350px"/>
 </p>
 
 ## About
 
-Think about an ordinary movie theater, ok, now forget it! Cineflex is not an app for an ordinary movie theater, this platform is about a theater which only broadcasts the IMDB 50 top rated movies. If you are a cinefile that loves to watch movies your family thinks like: "what? this is from the 60's", this is the theater for you to go. Use the production version on this link: https://sing-me-a-song-backend.herokuapp.com
-
-
-## Features
+Are you very undecided? Well, I am, but we are lucky internet has become a life savior. In this API you can post some musics, upvote the ones you like the most and downvote the ones you don't enjoy. Based on those actions, Sing me a Song API has an algorithm which returns randomly the musics you've posted. You can also get your top voted musics only by setting the amount you want. Isn't that awesome? Your "I don't know which music I wanna choose" moments are over!!
 
 ## Features
 
@@ -27,7 +24,7 @@ The API has the following endpoints:
     ```
     
     - Validation
-        - `name` is a mandatory string
+        - `name` must follow the pattern "Artist - Name"
         - `youtubeLink` must be a youtube domain link
     - Return
         - Returns the JSON of the music you've registered:
@@ -52,7 +49,7 @@ The API has the following endpoints:
     <summary><strong>POST</strong> /recommendations/:id/downvote</summary>
     
 - Remove a point of the recommendation you've chosen.
-- If the scores get bellow -5, the recommendation'll be deleted.
+- If the score gets bellow -5, the recommendation'll be deleted.
 - Returns the recommendation with the new score
 </details>
 
@@ -63,7 +60,7 @@ The API has the following endpoints:
 - **70% of the times**: a music which score is above 10 will be recommended randomly;
 - **30% of the times**: a música which score is between -5 e 10 (included) will be recommended randomly;
 - In case there are only above 10 scores or only bellow or equal to 10 scores, any music will be recommended;
--In case there are no musics on the database, a statusCode 404 will be returned;
+- In case there are no musics on the database, a statusCode 404 will be returned;
 
 - The answer will follow the pattern bellow:
 
@@ -125,6 +122,9 @@ npm start:dev
 ```
 
 ## What comes next?
+
+- On the next versions the musics will be organized by genres so you can listen tio the one you're in the mood;
+- There'll be a plataform where you can try the API and will not be demmanded to use JSON formats;
 
 ## Tecnologies I Used
 
