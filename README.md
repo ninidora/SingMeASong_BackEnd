@@ -1,4 +1,4 @@
-# Sing me a Song
+# Sing me a Song API
 <p align="center" >
  <img src = "https://user-images.githubusercontent.com/87671165/144729793-8aadf069-cdfa-4d51-89b5-17ebb9588b27.gif" height = "350px"/>
 </p>
@@ -122,6 +122,9 @@ npm start:dev
 ```
 
 ## What comes next?
+
+- On the next versions the musics will be organized by genres so you can listen tio the one you're in the mood;
+- There'll be a plataform where you can try the API and will not be demmanded to use JSON formats;
 
 ## Tecnologies I Used
 
