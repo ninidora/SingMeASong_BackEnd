@@ -14,6 +14,8 @@ Think about an ordinary movie theater, ok, now forget it! Cineflex is not an app
 
 ## How to run?
 
+You can use this url to make your requisitions: https://sing-me-a-song-backend.herokuapp.com, or run it locally following the steps bellow:
+
 1. Clone this repository
 2. Install dependencies
 ```bash
