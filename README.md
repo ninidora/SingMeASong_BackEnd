@@ -126,6 +126,12 @@ npm start:dev
 - On the next versions the musics will be organized by genres so you can listen tio the one you're in the mood;
 - There'll be a plataform where you can try the API and will not be demmanded to use JSON formats;
 
+## Tests Coverage
+
+<p align="center" >
+ <img alt="Screen Shot 2021-12-05 at 00 30 12" src="https://user-images.githubusercontent.com/87671165/144732321-04105012-aff6-4f88-b486-cfd883d29d04.png" height = "350px"/>
+</p>
+
 ## Tecnologies I Used
 
 ![NodeJS](https://img.shields.io/badge/Node.js-43853D?style=flat-square&logo=node.js&logoColor=white)
