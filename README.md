@@ -52,7 +52,7 @@ The API has the following endpoints:
     <summary><strong>POST</strong> /recommendations/:id/downvote</summary>
     
 - Remove a point of the recommendation you've chosen.
-- If the scores get bellow -5, the recommendation'll be deleted.
+- If the score gets bellow -5, the recommendation'll be deleted.
 - Returns the recommendation with the new score
 </details>
 
@@ -63,7 +63,7 @@ The API has the following endpoints:
 - **70% of the times**: a music which score is above 10 will be recommended randomly;
 - **30% of the times**: a música which score is between -5 e 10 (included) will be recommended randomly;
 - In case there are only above 10 scores or only bellow or equal to 10 scores, any music will be recommended;
--In case there are no musics on the database, a statusCode 404 will be returned;
+- In case there are no musics on the database, a statusCode 404 will be returned;
 
 - The answer will follow the pattern bellow:
 
