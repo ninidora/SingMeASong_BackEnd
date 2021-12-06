@@ -108,10 +108,7 @@ You can use this url to make your requisitions: https://sing-me-a-song-backend.h
 ```bash
 npm i
 ```
-3. Run the front-end with
-```bash
-npm start
-```
+3. Open the repository's folder;
 4. Open the file "database_backup.sql", then copy and paste the script on some database you'll create on your postgres terminal;
 
 5. create an .env.dev file following the .env.example template using the credentials of the database you've created above;
